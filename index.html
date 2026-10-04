@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Educa+ | Educação transforma oportunidades</title>
+  <meta name="description" content="Portal Educa+: cursos gratuitos, construtor de currículo e comunidade, baseado na ODS 4 (Educação de Qualidade) da ONU.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: '#2563EB', secondary: '#0284C7', tertiary: '#10B981', ink: '#0F172A' },
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer components {
+      .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary; }
+      .btn-primary { @apply btn bg-primary text-white hover:bg-blue-700; }
+      .btn-outline { @apply btn border-2 border-primary text-primary bg-transparent hover:bg-blue-50; }
+      .btn-inverted { @apply btn bg-white text-primary hover:bg-blue-50; }
+      .btn-ghost { @apply btn text-ink hover:bg-slate-100; }
+      .nav-link { @apply rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary; }
+      .nav-link[aria-current="page"] { @apply bg-blue-50 text-primary; }
+      .field { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-ink placeholder-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-blue-200; }
+      .field[aria-invalid="true"] { @apply border-red-500 ring-2 ring-red-100; }
+      .label { @apply mb-1 block text-sm font-semibold text-ink; }
+      .error { @apply mt-1 text-sm text-red-600; }
+      .card { @apply rounded-2xl border border-slate-200 bg-white; }
+      .footer-link { @apply text-sm text-slate-300 hover:text-white focus:outline-none focus-visible:underline; }
+    }
+  </style>
+  <style>
+    :root {
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      color-scheme: light;
+    }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+    body { background: #F8FAFC; color: #0F172A; }
+    .site-header { top: env(safe-area-inset-top, 0px); }
+    .star-btn { font-size: 2rem; line-height: 1; color: #CBD5E1; }
+    .star-btn.is-on { color: #F59E0B; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+    @media print {
+      body { background: #fff; }
+      .site-header, .site-footer, .no-print, #toast { display: none !important; }
+      main > section:not(#page-empregabilidade) { display: none !important; }
+      #cv-sheet { box-shadow: none !important; border: 0 !important; padding: 0 !important; }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-primary">Pular para o conteúdo</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header sticky z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#home" data-nav="home" class="flex items-center gap-2 rounded-lg text-xl font-extrabold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="Educa+, ir para o início">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-primary text-white" aria-hidden="true">E+</span>
+        <span>Educa<span class="text-primary">+</span></span>
+      </a>
+
+      <nav class="hidden items-center gap-1 md:flex" aria-label="Navegação principal">
+        <a href="#home" data-nav="home" class="nav-link">Home</a>
+        <a href="#educacao" data-nav="educacao" class="nav-link">Educação</a>
+        <a href="#empregabilidade" data-nav="empregabilidade" class="nav-link">Empregabilidade</a>
+        <a href="#comunidade" data-nav="comunidade" class="nav-link">Comunidade</a>
+      </nav>
+
+      <div class="hidden items-center gap-2 md:flex" data-auth-slot></div>
+
+      <button type="button" id="menu-toggle" class="rounded-lg p-2 text-ink hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden border-t border-slate-200 bg-white px-4 py-3 md:hidden">
+      <nav class="flex flex-col gap-1" aria-label="Navegação principal (mobile)">
+        <a href="#home" data-nav="home" class="nav-link">Home</a>
+        <a href="#educacao" data-nav="educacao" class="nav-link">Educação</a>
+        <a href="#empregabilidade" data-nav="empregabilidade" class="nav-link">Empregabilidade</a>
+        <a href="#comunidade" data-nav="comunidade" class="nav-link">Comunidade</a>
+      </nav>
+      <div class="mt-3 flex flex-wrap items-center gap-2" data-auth-slot></div>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1" class="focus:outline-none">
+
+    <!-- ===================== ECRÃ: LOGIN / CADASTRO ===================== -->
+    <section id="page-login" data-page="login" class="hidden" aria-labelledby="login-title">
+      <div class="mx-auto max-w-md px-4 py-12 sm:py-20">
+        <form id="auth-form" class="card p-6 shadow-sm sm:p-8" novalidate>
+          <h1 id="login-title" class="text-2xl font-extrabold text-ink sm:text-3xl">Entrar no Educa+</h1>
+          <p id="login-sub" class="mt-2 text-slate-600">Acesse seus cursos e continue de onde parou.</p>
+
+          <div class="mt-6 space-y-4">
+            <div id="auth-name-wrap" class="hidden">
+              <label for="auth-name" class="label">Nome</label>
+              <input id="auth-name" type="text" class="field" autocomplete="name" placeholder="Como podemos chamar você?" aria-describedby="err-auth-name">
+              <p id="err-auth-name" class="error hidden" role="alert"></p>
+            </div>
+            <div>
+              <label for="auth-email" class="label">E-mail</label>
+              <input id="auth-email" type="email" class="field" autocomplete="email" placeholder="nome@email.com" aria-describedby="err-auth-email">
+              <p id="err-auth-email" class="error hidden" role="alert"></p>
+            </div>
+            <div>
+              <label for="auth-pass" class="label">Senha</label>
+              <input id="auth-pass" type="password" class="field" autocomplete="current-password" placeholder="Mínimo de 6 caracteres" aria-describedby="err-auth-pass">
+              <p id="err-auth-pass" class="error hidden" role="alert"></p>
+            </div>
+          </div>
+
+          <button type="submit" id="auth-submit" class="btn-primary mt-6 w-full py-3.5 text-base">Entrar</button>
+
+          <p class="mt-5 text-center text-sm text-slate-600">
+            <span id="auth-switch-text">Ainda não tem conta?</span>
+            <button type="button" id="auth-switch" class="rounded font-semibold text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">Criar nova conta</button>
+          </p>
+          <p class="mt-4 text-center text-xs text-slate-500">Protótipo: o acesso é simulado e nenhum dado é enviado.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== ECRÃ: HOME ===================== -->
+    <section id="page-home" data-page="home" aria-labelledby="home-title">
+      <!-- Hero -->
+      <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
+        <div>
+          <div class="mb-5 flex flex-wrap gap-2">
+            <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">100% Gratuito</span>
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800">Acessível</span>
+            <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-800">ODS 4 da ONU</span>
+          </div>
+          <h1 id="home-title" class="text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl lg:text-6xl">Educação transforma oportunidades.</h1>
+          <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">Aprenda no seu ritmo, monte seu currículo e construa o seu futuro com cursos gratuitos e ferramentas pensadas para quem está começando.</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="#educacao" data-nav="educacao" class="btn-primary">Explorar Cursos</a>
+            <a href="#empregabilidade" data-nav="empregabilidade" class="btn-outline">Encontrar oportunidades</a>
+          </div>
+        </div>
+
+        <div class="relative pb-8">
+          <div class="overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-secondary" role="img" aria-label="Ilustração de três estudantes aprendendo juntos">
+            <svg viewBox="0 0 560 420" class="block h-auto w-full" aria-hidden="true">
+              <circle cx="470" cy="70" r="120" fill="#ffffff" opacity=".08"/>
+              <circle cx="80" cy="380" r="140" fill="#ffffff" opacity=".08"/>
+              <rect x="60" y="300" width="440" height="16" rx="8" fill="#ffffff" opacity=".35"/>
+              <!-- estudante 1 -->
+              <circle cx="150" cy="170" r="38" fill="#FDE68A"/>
+              <path d="M90 300c0-44 27-74 60-74s60 30 60 74z" fill="#10B981"/>
+              <!-- estudante 2 -->
+              <circle cx="280" cy="140" r="44" fill="#FBCFE8"/>
+              <path d="M208 300c0-52 32-88 72-88s72 36 72 88z" fill="#ffffff"/>
+              <path d="M226 118l54-24 54 24-54 24z" fill="#0F172A"/>
+              <path d="M334 118v30" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+              <!-- estudante 3 -->
+              <circle cx="410" cy="170" r="38" fill="#BAE6FD"/>
+              <path d="M350 300c0-44 27-74 60-74s60 30 60 74z" fill="#0F172A"/>
+              <!-- livros / notebook -->
+              <rect x="232" y="262" width="96" height="38" rx="6" fill="#0F172A"/>
+              <rect x="240" y="269" width="80" height="24" rx="3" fill="#38BDF8"/>
+              <rect x="110" y="284" width="70" height="16" rx="4" fill="#FDE68A"/>
+              <rect x="380" y="284" width="70" height="16" rx="4" fill="#10B981"/>
+            </svg>
+          </div>
+          <div class="card absolute bottom-0 left-4 right-4 flex items-center gap-3 p-4 shadow-lg sm:left-6 sm:right-auto sm:max-w-xs">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-100 text-xl" aria-hidden="true">🤝</span>
+            <p class="text-sm font-bold text-ink">Conectando saberes e oportunidades reais</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estatísticas -->
+      <div class="border-y border-slate-200 bg-white">
+        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+          <h2 class="text-2xl font-extrabold text-ink sm:text-3xl">O impacto do Educa+ em números</h2>
+          <p class="mt-2 max-w-2xl text-slate-600">Dados ilustrativos do protótipo.</p>
+          <dl class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <div class="rounded-2xl bg-slate-50 p-5">
+              <dd class="text-3xl font-extrabold text-primary">12.500</dd>
+              <dt class="mt-1 text-sm font-medium text-slate-600">Estudantes ativos</dt>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-5">
+              <dd class="text-3xl font-extrabold text-secondary">48</dd>
+              <dt class="mt-1 text-sm font-medium text-slate-600">Cursos gratuitos</dt>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-5">
+              <dd class="text-3xl font-extrabold text-emerald-600">3.200</dd>
+              <dt class="mt-1 text-sm font-medium text-slate-600">Certificados emitidos</dt>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-5">
+              <dd class="text-3xl font-extrabold text-primary">87%</dd>
+              <dt class="mt-1 text-sm font-medium text-slate-600">Relatam novas oportunidades</dt>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Pilares -->
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+        <h2 class="text-2xl font-extrabold text-ink sm:text-3xl">Conheça as 3 áreas do Educa+</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          <article class="card flex flex-col p-7">
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-blue-100 text-2xl" aria-hidden="true">📚</span>
+            <h3 class="mt-5 text-xl font-bold text-ink">Educação &amp; Capacitação</h3>
+            <p class="mt-2 flex-1 text-slate-600">Cursos gratuitos de tecnologia, administração, marketing e comunicação, do nível iniciante ao avançado.</p>
+            <a href="#educacao" data-nav="educacao" class="mt-6 font-semibold text-primary hover:underline focus:outline-none focus-visible:underline">Ver cursos disponíveis</a>
+          </article>
+          <article class="card flex flex-col p-7">
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-sky-100 text-2xl" aria-hidden="true">💼</span>
+            <h3 class="mt-5 text-xl font-bold text-ink">Empregabilidade &amp; Carreira</h3>
+            <p class="mt-2 flex-1 text-slate-600">Monte um currículo profissional em minutos e veja o resultado enquanto preenche.</p>
+            <a href="#empregabilidade" data-nav="empregabilidade" class="mt-6 font-semibold text-primary hover:underline focus:outline-none focus-visible:underline">Criar meu currículo</a>
+          </article>
+          <article class="card flex flex-col p-7">
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-emerald-100 text-2xl" aria-hidden="true">💬</span>
+            <h3 class="mt-5 text-xl font-bold text-ink">Comunidade &amp; Feedback</h3>
+            <p class="mt-2 flex-1 text-slate-600">Leia a experiência de outros estudantes e conte como o portal pode melhorar.</p>
+            <a href="#comunidade" data-nav="comunidade" class="mt-6 font-semibold text-primary hover:underline focus:outline-none focus-visible:underline">Ver avaliações</a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Banner ODS 4 -->
+      <div class="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
+        <div class="flex flex-col items-start gap-6 rounded-3xl bg-primary p-8 text-white sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p class="text-sm font-bold text-blue-100">ODS 4: Educação de Qualidade</p>
+            <h2 class="mt-2 text-3xl font-extrabold sm:text-4xl">Educação feita para todos, sem exceções.</h2>
+            <p class="mt-3 max-w-2xl text-blue-100">Assegurar a educação inclusiva, equitativa e de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todas as pessoas.</p>
+          </div>
+          <a href="#educacao" data-nav="educacao" class="btn-inverted shrink-0">Começar a aprender</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ECRÃ: EDUCAÇÃO ===================== -->
+    <section id="page-educacao" data-page="educacao" class="hidden" aria-labelledby="edu-title">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+        <h1 id="edu-title" class="text-3xl font-extrabold text-ink sm:text-4xl">Educação &amp; Capacitação</h1>
+        <p class="mt-2 text-slate-600">Encontre um curso para o seu momento e comece hoje.</p>
+
+        <form id="course-filters" class="card mt-6 p-4 sm:p-5" role="search" aria-label="Buscar cursos" novalidate>
+          <label for="course-search" class="sr-only">Buscar cursos</label>
+          <div class="relative">
+            <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="course-search" type="search" class="field pl-10" placeholder="Busque por tecnologia, administração, marketing..." autocomplete="off">
+          </div>
+          <div class="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div>
+              <label for="f-area" class="label">Área</label>
+              <select id="f-area" class="field">
+                <option value="">Todas</option><option>Tecnologia</option><option>Administração</option><option>Marketing</option><option>Design</option><option>Comunicação</option>
+              </select>
+            </div>
+            <div>
+              <label for="f-nivel" class="label">Nível</label>
+              <select id="f-nivel" class="field">
+                <option value="">Todos</option><option>Iniciante</option><option>Intermediário</option><option>Avançado</option>
+              </select>
+            </div>
+            <div>
+              <label for="f-modalidade" class="label">Modalidade</label>
+              <select id="f-modalidade" class="field">
+                <option value="">Todas</option><option>Online</option><option>Híbrido</option><option>Presencial</option>
+              </select>
+            </div>
+            <div>
+              <label for="f-investimento" class="label">Investimento</label>
+              <select id="f-investimento" class="field">
+                <option value="">Todos</option><option>Gratuito</option><option>Bolsa integral</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Destaques -->
+      <div class="bg-emerald-900">
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <h2 class="text-2xl font-extrabold text-white sm:text-3xl">Cursos Gratuitos em Destaque</h2>
+          <div id="featured-courses" class="mt-6 grid gap-5 lg:grid-cols-3"></div>
+        </div>
+      </div>
+
+      <!-- Catálogo -->
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <h2 class="text-2xl font-extrabold text-ink sm:text-3xl">Todos os Cursos Disponíveis</h2>
+          <p id="course-count" class="text-sm font-medium text-slate-600" aria-live="polite"></p>
+        </div>
+        <div id="course-grid" class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+        <nav id="course-pagination" class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Paginação dos cursos"></nav>
+      </div>
+    </section>
+
+    <!-- ===================== ECRÃ: SALA DE AULA ===================== -->
+    <section id="page-sala" data-page="sala" class="hidden" aria-labelledby="sala-title">
+      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="min-w-0">
+            <p id="sala-meta" class="text-sm font-semibold text-secondary"></p>
+            <h1 id="sala-title" class="text-2xl font-extrabold text-ink sm:text-3xl"></h1>
+          </div>
+          <a href="#educacao" data-nav="educacao" class="btn-outline">Voltar para Cursos</a>
+        </div>
+
+        <div class="mt-6 grid items-start gap-6 lg:grid-cols-3">
+          <!-- Esquerda: player -->
+          <div class="lg:col-span-2">
+            <div class="relative grid aspect-video place-items-center overflow-hidden rounded-2xl bg-black text-white">
+              <button type="button" id="player-btn" aria-pressed="false" aria-label="Reproduzir aula" class="grid h-20 w-20 place-items-center rounded-full bg-white/15 hover:bg-white/25 focus:outline-none focus-visible:ring-4 focus-visible:ring-white">
+                <svg id="icon-play" width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="icon-pause" class="hidden" width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+              </button>
+              <p id="player-status" class="absolute bottom-4 left-4 right-4 text-sm text-slate-300" aria-live="polite">Vídeo de demonstração</p>
+            </div>
+
+            <div class="card mt-5 p-6">
+              <h2 id="lesson-title" class="text-xl font-extrabold text-ink"></h2>
+              <p id="lesson-desc" class="mt-2 leading-relaxed text-slate-600"></p>
+              <h3 class="mt-5 text-sm font-bold text-ink">Material de apoio</h3>
+              <div class="mt-2 flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-red-100 text-xs font-extrabold text-red-700" aria-hidden="true">PDF</span>
+                <p id="pdf-name" class="min-w-0 flex-1 break-all text-sm font-medium text-ink"></p>
+                <button type="button" id="lesson-pdf" class="btn-outline px-4 py-2">Baixar PDF</button>
+              </div>
+              <button type="button" id="lesson-complete" class="btn-primary mt-5" aria-pressed="false">Marcar aula como concluída</button>
+            </div>
+
+            <div id="certificate" class="mt-5 hidden rounded-2xl border-2 border-emerald-500 bg-white p-8 text-center focus:outline-none" tabindex="-1" aria-label="Certificado de conclusão">
+              <p class="text-sm font-bold text-emerald-700">Certificado de conclusão</p>
+              <p class="mt-3 text-slate-600">O Educa+ certifica que</p>
+              <p id="cert-name" class="mt-1 text-2xl font-extrabold text-ink"></p>
+              <p class="mt-3 text-slate-600">concluiu o curso</p>
+              <p id="cert-course" class="mt-1 text-lg font-bold text-primary"></p>
+              <p id="cert-info" class="mt-3 text-sm text-slate-500"></p>
+            </div>
+          </div>
+
+          <!-- Direita: módulos e progresso -->
+          <aside class="card p-5 lg:sticky lg:top-24" aria-label="Conteúdo do curso">
+            <div class="flex items-center justify-between text-sm font-bold text-ink">
+              <span id="progress-label">Seu progresso</span>
+              <span id="progress-pct">0%</span>
+            </div>
+            <div id="progress-bar" class="mt-2 h-3 rounded-full bg-slate-200" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="progress-fill" class="h-3 rounded-full bg-tertiary transition-all" style="width:0%"></div>
+            </div>
+            <p id="progress-count" class="mt-1 text-xs text-slate-500"></p>
+
+            <div id="module-list" class="mt-5 space-y-5"></div>
+
+            <button type="button" id="cert-btn" disabled class="btn mt-6 w-full bg-emerald-600 text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500">Emitir Certificado</button>
+            <p id="cert-hint" class="mt-2 text-center text-xs text-slate-500"></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ECRÃ: EMPREGABILIDADE ===================== -->
+    <section id="page-empregabilidade" data-page="empregabilidade" class="hidden" aria-labelledby="emp-title">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+        <div class="no-print">
+          <h1 id="emp-title" class="text-3xl font-extrabold text-ink sm:text-4xl">Empregabilidade &amp; Carreira</h1>
+          <p class="mt-2 text-slate-600">Preencha os campos e veja o seu currículo ser montado ao lado.</p>
+        </div>
+
+        <div class="mt-8 grid items-start gap-8 lg:grid-cols-2">
+          <!-- Formulário -->
+          <form id="cv-form" class="no-print space-y-3" novalidate aria-label="Dados do currículo">
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="true" aria-controls="acc-1">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">1</span>
+                  <span class="flex-1">Dados Pessoais &amp; Contato</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">−</span>
+                </button>
+              </h2>
+              <div id="acc-1" class="acc-panel grid gap-4 border-t border-slate-200 p-4 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label for="cv-nome" class="label">Nome completo <span class="text-red-600" aria-hidden="true">*</span></label>
+                  <input id="cv-nome" data-bind="nome" type="text" class="field" value="Mariana Silva Oliveira" required autocomplete="name" aria-describedby="err-nome">
+                  <p id="err-nome" class="error hidden" role="alert"></p>
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="cv-titulo" class="label">Título profissional</label>
+                  <input id="cv-titulo" data-bind="titulo" type="text" class="field" value="Assistente Administrativa" placeholder="Ex.: Auxiliar de Marketing">
+                </div>
+                <div>
+                  <label for="cv-email" class="label">E-mail <span class="text-red-600" aria-hidden="true">*</span></label>
+                  <input id="cv-email" data-bind="email" type="email" class="field" value="mariana.oliveira@email.com" required autocomplete="email" aria-describedby="err-email">
+                  <p id="err-email" class="error hidden" role="alert"></p>
+                </div>
+                <div>
+                  <label for="cv-telefone" class="label">Telefone</label>
+                  <input id="cv-telefone" data-bind="telefone" type="tel" class="field" value="(11) 98765-4321" autocomplete="tel" placeholder="(00) 00000-0000">
+                </div>
+                <div>
+                  <label for="cv-cidade" class="label">Cidade / Estado</label>
+                  <input id="cv-cidade" data-bind="cidade" type="text" class="field" value="São Paulo, SP">
+                </div>
+                <div>
+                  <label for="cv-linkedin" class="label">LinkedIn</label>
+                  <input id="cv-linkedin" data-bind="linkedin" type="text" class="field" value="linkedin.com/in/marianaoliveira">
+                </div>
+              </div>
+            </div>
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="false" aria-controls="acc-2">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">2</span>
+                  <span class="flex-1">Objetivo Profissional</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">+</span>
+                </button>
+              </h2>
+              <div id="acc-2" class="acc-panel hidden border-t border-slate-200 p-4">
+                <label for="cv-objetivo" class="label">Objetivo</label>
+                <textarea id="cv-objetivo" data-bind="objetivo" rows="4" class="field">Atuar na área administrativa, aplicando organização, comunicação e os conhecimentos adquiridos em cursos de capacitação para contribuir com os resultados da equipe.</textarea>
+              </div>
+            </div>
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="false" aria-controls="acc-3">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">3</span>
+                  <span class="flex-1">Formação Acadêmica</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">+</span>
+                </button>
+              </h2>
+              <div id="acc-3" class="acc-panel hidden grid gap-4 border-t border-slate-200 p-4 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label for="cv-form-curso" class="label">Curso</label>
+                  <input id="cv-form-curso" data-bind="formCurso" type="text" class="field" value="Ensino Médio Completo">
+                </div>
+                <div>
+                  <label for="cv-form-inst" class="label">Instituição</label>
+                  <input id="cv-form-inst" data-bind="formInst" type="text" class="field" value="E.E. Professora Maria Helena">
+                </div>
+                <div>
+                  <label for="cv-form-periodo" class="label">Período</label>
+                  <input id="cv-form-periodo" data-bind="formPeriodo" type="text" class="field" value="2021 a 2023">
+                </div>
+              </div>
+            </div>
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="false" aria-controls="acc-4">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">4</span>
+                  <span class="flex-1">Experiência</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">+</span>
+                </button>
+              </h2>
+              <div id="acc-4" class="acc-panel hidden grid gap-4 border-t border-slate-200 p-4 sm:grid-cols-2">
+                <div>
+                  <label for="cv-exp-cargo" class="label">Cargo</label>
+                  <input id="cv-exp-cargo" data-bind="expCargo" type="text" class="field" value="Jovem Aprendiz Administrativo">
+                </div>
+                <div>
+                  <label for="cv-exp-empresa" class="label">Empresa</label>
+                  <input id="cv-exp-empresa" data-bind="expEmpresa" type="text" class="field" value="Comercial Horizonte Ltda.">
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="cv-exp-periodo" class="label">Período</label>
+                  <input id="cv-exp-periodo" data-bind="expPeriodo" type="text" class="field" value="Mar/2023 a Dez/2024">
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="cv-exp-desc" class="label">Principais atividades</label>
+                  <textarea id="cv-exp-desc" data-bind="expDesc" rows="3" class="field">Atendimento a clientes, organização de documentos, lançamento de dados em planilhas e apoio à equipe financeira.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="false" aria-controls="acc-5">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">5</span>
+                  <span class="flex-1">Cursos ODS 4</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">+</span>
+                </button>
+              </h2>
+              <div id="acc-5" class="acc-panel hidden border-t border-slate-200 p-4">
+                <label for="cv-cursos" class="label">Cursos concluídos (um por linha)</label>
+                <textarea id="cv-cursos" data-bind="cursos" rows="4" class="field" aria-describedby="hint-cursos">Gestão Financeira Básica, Educa+ (20h)
+Comunicação Assertiva, Educa+ (12h)
+Excel do Básico ao Intermediário, Educa+ (30h)</textarea>
+                <p id="hint-cursos" class="mt-1 text-sm text-slate-500">Inclua os cursos que você concluiu no Educa+.</p>
+              </div>
+            </div>
+
+            <div class="card overflow-hidden">
+              <h2>
+                <button type="button" class="acc-btn flex w-full items-center gap-3 p-4 text-left font-bold text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" aria-expanded="false" aria-controls="acc-6">
+                  <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm text-white">6</span>
+                  <span class="flex-1">Habilidades &amp; Competências</span>
+                  <span class="acc-icon text-slate-400" aria-hidden="true">+</span>
+                </button>
+              </h2>
+              <div id="acc-6" class="acc-panel hidden border-t border-slate-200 p-4">
+                <label for="cv-habilidades" class="label">Habilidades (separadas por vírgula)</label>
+                <input id="cv-habilidades" data-bind="habilidades" type="text" class="field" value="Pacote Office, Organização, Trabalho em equipe, Comunicação, Atendimento ao cliente">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-3.5 text-base">Gerar Currículo</button>
+          </form>
+
+          <!-- Preview -->
+          <div class="lg:sticky lg:top-24">
+            <div class="no-print mb-3 flex items-center justify-between gap-2">
+              <p class="text-sm font-semibold text-slate-600">Pré-visualização</p>
+              <div class="flex gap-2">
+                <button type="button" id="btn-print" class="btn-outline px-4 py-2">Imprimir</button>
+                <button type="button" id="btn-pdf" class="btn-primary px-4 py-2">Baixar PDF</button>
+              </div>
+            </div>
+            <article id="cv-sheet" class="min-h-[640px] rounded-lg border border-slate-200 bg-white p-8 shadow-xl sm:p-10" aria-label="Pré-visualização do currículo" aria-live="off">
+              <header class="border-b-2 border-primary pb-4">
+                <h2 data-out="nome" class="break-words text-2xl font-extrabold text-ink sm:text-3xl"></h2>
+                <p data-out="titulo" class="mt-1 font-semibold text-primary"></p>
+                <ul id="cv-contato" class="mt-3 flex flex-wrap gap-x-4 gap-y-1 break-all text-sm text-slate-600"></ul>
+              </header>
+              <section data-block="objetivo" class="mt-5">
+                <h3 class="text-sm font-extrabold text-secondary">Objetivo Profissional</h3>
+                <p data-out="objetivo" class="mt-1 whitespace-pre-line text-sm leading-relaxed text-slate-700"></p>
+              </section>
+              <section data-block="formacao" class="mt-5">
+                <h3 class="text-sm font-extrabold text-secondary">Formação Acadêmica</h3>
+                <p class="mt-1 text-sm font-bold text-ink" data-out="formCurso"></p>
+                <p class="text-sm text-slate-700"><span data-out="formInst"></span><span data-sep="form"> | </span><span data-out="formPeriodo"></span></p>
+              </section>
+              <section data-block="experiencia" class="mt-5">
+                <h3 class="text-sm font-extrabold text-secondary">Experiência</h3>
+                <p class="mt-1 text-sm font-bold text-ink" data-out="expCargo"></p>
+                <p class="text-sm text-slate-700"><span data-out="expEmpresa"></span><span data-sep="exp"> | </span><span data-out="expPeriodo"></span></p>
+                <p data-out="expDesc" class="mt-1 whitespace-pre-line text-sm leading-relaxed text-slate-700"></p>
+              </section>
+              <section data-block="cursos" class="mt-5">
+                <h3 class="text-sm font-extrabold text-secondary">Cursos ODS 4</h3>
+                <ul id="cv-cursos-list" class="mt-1 list-disc space-y-0.5 pl-5 text-sm text-slate-700"></ul>
+              </section>
+              <section data-block="habilidades" class="mt-5">
+                <h3 class="text-sm font-extrabold text-secondary">Habilidades &amp; Competências</h3>
+                <ul id="cv-skills-list" class="mt-2 flex flex-wrap gap-2"></ul>
+              </section>
+            </article>
+          </div>
+        </div>
+
+        <!-- Rodapé da seção -->
+        <div class="no-print mt-12 grid gap-4 md:grid-cols-3">
+          <div class="card flex items-center gap-4 p-5">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-blue-100 text-2xl" aria-hidden="true">🎤</span>
+            <div><h3 class="font-bold text-ink">Treine sua Entrevista</h3><p class="text-sm text-slate-600">Perguntas frequentes e dicas de resposta.</p></div>
+          </div>
+          <div class="card flex items-center gap-4 p-5">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-emerald-100 text-2xl" aria-hidden="true">🎓</span>
+            <div><h3 class="font-bold text-ink">Cursos com Certificado</h3><p class="text-sm text-slate-600">Valorize o currículo com novas formações.</p></div>
+          </div>
+          <div class="card flex items-center gap-4 p-5">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-sky-100 text-2xl" aria-hidden="true">🌍</span>
+            <div><h3 class="font-bold text-ink">Vagas Inclusivas</h3><p class="text-sm text-slate-600">Oportunidades abertas à diversidade.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ECRÃ: COMUNIDADE ===================== -->
+    <section id="page-comunidade" data-page="comunidade" class="hidden" aria-labelledby="com-title">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+        <h1 id="com-title" class="text-3xl font-extrabold text-ink sm:text-4xl">Comunidade e Avaliações do Portal</h1>
+        <p class="mt-2 text-slate-600">O que os estudantes dizem sobre o Educa+.</p>
+
+        <!-- Dashboard -->
+        <div class="mt-8 grid gap-5 md:grid-cols-3">
+          <div class="rounded-2xl bg-primary p-6 text-white">
+            <p class="text-sm font-semibold text-blue-100">Satisfação Média</p>
+            <p class="mt-2 text-5xl font-extrabold">4.8<span class="text-2xl font-bold text-blue-200">/5.0</span></p>
+            <p class="mt-2 text-xl text-amber-300" aria-hidden="true">★★★★★</p>
+            <p class="mt-1 text-sm text-blue-100"><span id="review-total">0</span> avaliações recebidas</p>
+          </div>
+          <div class="card flex items-center gap-5 p-6">
+            <svg width="110" height="110" viewBox="0 0 120 120" role="img" aria-label="96% de índice de recomendação" class="shrink-0">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#E2E8F0" stroke-width="12"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round" stroke-dasharray="301.6 314.2" transform="rotate(-90 60 60)"/>
+              <text x="60" y="68" text-anchor="middle" font-size="26" font-weight="800" fill="#0F172A" font-family="inherit">96%</text>
+            </svg>
+            <div>
+              <p class="font-bold text-ink">Índice de recomendação</p>
+              <p class="text-sm text-slate-600">dos usuários indicariam o Educa+ a um amigo.</p>
+            </div>
+          </div>
+          <div class="card p-6">
+            <p class="font-bold text-ink">Indicadores</p>
+            <div class="mt-4 space-y-4">
+              <div>
+                <div class="flex justify-between text-sm font-medium text-slate-700"><span id="ind-1">Fácil de navegar</span><span>98%</span></div>
+                <div class="mt-1 h-2.5 rounded-full bg-slate-200" role="progressbar" aria-labelledby="ind-1" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"><div class="h-2.5 rounded-full bg-primary" style="width:98%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm font-medium text-slate-700"><span id="ind-2">Informações úteis</span><span>95%</span></div>
+                <div class="mt-1 h-2.5 rounded-full bg-slate-200" role="progressbar" aria-labelledby="ind-2" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"><div class="h-2.5 rounded-full bg-tertiary" style="width:95%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed + Formulário -->
+        <div class="mt-10 grid items-start gap-8 lg:grid-cols-3">
+          <div class="lg:col-span-2">
+            <h2 class="text-xl font-extrabold text-ink">Avaliações recentes</h2>
+            <ul id="review-feed" class="mt-4 space-y-4"></ul>
+          </div>
+
+          <form id="review-form" class="card p-6 lg:sticky lg:top-24" novalidate aria-labelledby="review-form-title">
+            <p class="text-sm font-bold text-primary">Sua voz importa</p>
+            <h2 id="review-form-title" class="mt-1 text-xl font-extrabold text-ink">Como foi sua experiência?</h2>
+
+            <fieldset class="mt-5">
+              <legend class="label">Sua nota <span class="text-red-600" aria-hidden="true">*</span></legend>
+              <div id="star-group" class="flex gap-1" role="radiogroup" aria-label="Nota de 1 a 5 estrelas" aria-describedby="err-nota">
+                <button type="button" class="star-btn rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" role="radio" aria-checked="false" data-star="1" aria-label="1 estrela">★</button>
+                <button type="button" class="star-btn rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" role="radio" aria-checked="false" data-star="2" aria-label="2 estrelas">★</button>
+                <button type="button" class="star-btn rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" role="radio" aria-checked="false" data-star="3" aria-label="3 estrelas">★</button>
+                <button type="button" class="star-btn rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" role="radio" aria-checked="false" data-star="4" aria-label="4 estrelas">★</button>
+                <button type="button" class="star-btn rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" role="radio" aria-checked="false" data-star="5" aria-label="5 estrelas">★</button>
+              </div>
+              <p id="err-nota" class="error hidden" role="alert"></p>
+            </fieldset>
+
+            <fieldset class="mt-5" aria-describedby="err-util">
+              <legend class="label">O portal ajudou você? <span class="text-red-600" aria-hidden="true">*</span></legend>
+              <div class="flex flex-wrap gap-2">
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-blue-50"><input type="radio" name="util" value="Sim" class="accent-blue-600"> Sim</label>
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-blue-50"><input type="radio" name="util" value="Parcialmente" class="accent-blue-600"> Parcialmente</label>
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-blue-50"><input type="radio" name="util" value="Não" class="accent-blue-600"> Não</label>
+              </div>
+              <p id="err-util" class="error hidden" role="alert"></p>
+            </fieldset>
+
+            <div class="mt-5">
+              <label for="review-text" class="label">Sugestões e comentários <span class="text-red-600" aria-hidden="true">*</span></label>
+              <textarea id="review-text" rows="4" maxlength="500" class="field" placeholder="Conte o que funcionou e o que pode melhorar." aria-describedby="err-texto"></textarea>
+              <p id="err-texto" class="error hidden" role="alert"></p>
+            </div>
+
+            <button type="submit" class="btn-primary mt-5 w-full">Enviar avaliação</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer bg-ink text-white">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+      <div class="grid gap-10 lg:grid-cols-3">
+        <div>
+          <p class="text-xl font-extrabold">Educa<span class="text-sky-400">+</span></p>
+          <h2 class="mt-3 text-2xl font-extrabold leading-snug">Educação transforma oportunidades.</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-2">
+          <nav aria-label="Rodapé: Educação">
+            <h3 class="text-sm font-bold text-white">Educação</h3>
+            <ul class="mt-3 space-y-2">
+              <li><a href="#educacao" data-nav="educacao" class="footer-link">Todos os cursos</a></li>
+              <li><a href="#educacao" data-nav="educacao" class="footer-link">Cursos em destaque</a></li>
+              <li><a href="#educacao" data-nav="educacao" class="footer-link">Tecnologia</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Rodapé: Empregabilidade">
+            <h3 class="text-sm font-bold text-white">Empregabilidade</h3>
+            <ul class="mt-3 space-y-2">
+              <li><a href="#empregabilidade" data-nav="empregabilidade" class="footer-link">Criar currículo</a></li>
+              <li><a href="#empregabilidade" data-nav="empregabilidade" class="footer-link">Treine sua entrevista</a></li>
+              <li><a href="#empregabilidade" data-nav="empregabilidade" class="footer-link">Vagas inclusivas</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Rodapé: Comunidade">
+            <h3 class="text-sm font-bold text-white">Comunidade</h3>
+            <ul class="mt-3 space-y-2">
+              <li><a href="#comunidade" data-nav="comunidade" class="footer-link">Avaliações</a></li>
+              <li><a href="#comunidade" data-nav="comunidade" class="footer-link">Enviar feedback</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Rodapé: Acesso e Suporte">
+            <h3 class="text-sm font-bold text-white">Acesso &amp; Suporte</h3>
+            <ul class="mt-3 space-y-2">
+              <li><a href="#login" data-nav="login" data-mode="login" class="footer-link">Entrar</a></li>
+              <li><a href="#login" data-nav="login" data-mode="signup" class="footer-link">Criar conta</a></li>
+              <li><button type="button" class="footer-link" data-demo="Central de ajuda">Central de ajuda</button></li>
+              <li><button type="button" class="footer-link" data-demo="Acessibilidade">Acessibilidade</button></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <p class="mt-12 border-t border-slate-700 pt-6 text-sm text-slate-400">&copy; 2026 Educa+. Baseado na ODS 4.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      /* ---------- Utilitários ---------- */
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+      const esc = (str) => String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const normalize = (str) => String(str).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      const starsText = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+      let toastTimer;
+      const toast = (message) => {
+        const box = $('#toast');
+        box.innerHTML = `<div class="rounded-xl bg-ink px-5 py-3 text-sm font-semibold text-white shadow-lg">${esc(message)}</div>`;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => { box.innerHTML = ''; }, 3500);
+      };
+
+      const setError = (id, message, input) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = message || '';
+        el.classList.toggle('hidden', !message);
+        if (input) input.setAttribute('aria-invalid', message ? 'true' : 'false');
+      };
+
+      /* ---------- Navegação SPA ---------- */
+      const PAGES = { home: 'Início', login: 'Entrar', educacao: 'Educação', sala: 'Sala de aula', empregabilidade: 'Empregabilidade', comunidade: 'Comunidade' };
+
+      /* ---------- Estado da aplicação ---------- */
+      const store = {
+        get(key, fallback) {
+          try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (err) { return fallback; }
+        },
+        set(key, value) {
+          try { localStorage.setItem(key, JSON.stringify(value)); } catch (err) { /* armazenamento indisponível */ }
+        },
+        remove(key) {
+          try { localStorage.removeItem(key); } catch (err) { /* armazenamento indisponível */ }
+        }
+      };
+
+      const state = {
+        user: store.get('educa_user', null),          // { name, email } ou null
+        authMode: 'login',                            // 'login' | 'signup'
+        course: null,                                 // curso aberto na sala de aula
+        modules: [],                                  // módulos do curso aberto
+        lesson: null,                                 // aula selecionada
+        playing: false,                               // player simulado
+        progress: store.get('educa_progress', {})     // { [idCurso]: ['1.1', '1.2', ...] }
+      };
+
+      const showPage = (name, { focus = true } = {}) => {
+        let page = PAGES[name] ? name : 'home';
+        if (page === 'sala' && !state.course) page = 'educacao';
+        const navKey = page === 'sala' ? 'educacao' : page;
+        $$('[data-page]').forEach((sec) => sec.classList.toggle('hidden', sec.dataset.page !== page));
+        $$('[data-nav]').forEach((link) => {
+          if (link.classList.contains('nav-link')) {
+            if (link.dataset.nav === navKey) link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
+          }
+        });
+        document.title = `${PAGES[page]} | Educa+`;
+        closeMenu();
+        try { history.replaceState(null, '', `#${page}`); } catch (err) { /* ambiente sem history */ }
+        window.scrollTo(0, 0);
+        if (focus) $('#conteudo').focus({ preventScroll: true });
+      };
+
+      const menuToggle = $('#menu-toggle');
+      const mobileMenu = $('#mobile-menu');
+      function closeMenu() {
+        mobileMenu.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menu');
+      }
+      menuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('hidden') === false;
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+      });
+
+      document.addEventListener('click', (event) => {
+        const nav = event.target.closest('[data-nav]');
+        if (nav) {
+          event.preventDefault();
+          if (nav.dataset.mode) setAuthMode(nav.dataset.mode);
+          showPage(nav.dataset.nav);
+          return;
+        }
+        if (event.target.closest('[data-logout]')) {
+          logout();
+          return;
+        }
+        const demo = event.target.closest('[data-demo]');
+        if (demo) toast(`"${demo.dataset.demo}" estará disponível na próxima versão do portal.`);
+      });
+
+      window.addEventListener('hashchange', () => showPage(location.hash.slice(1), { focus: false }));
+
+      /* ---------- Educação: cursos ---------- */
+      const COURSES = [
+        { id: 1, featured: true, title: 'Introdução à Programação e Lógica com Python', subtitle: 'Dê os primeiros passos em programação criando pequenos projetos.', area: 'Tecnologia', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 40, rating: 4.9, votes: 1284, icon: '🐍', bg: 'from-blue-500 to-sky-400' },
+        { id: 2, featured: true, title: 'Gestão Financeira Básica', subtitle: 'Organize orçamento, fluxo de caixa e planejamento pessoal.', area: 'Administração', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 20, rating: 4.8, votes: 932, icon: '📊', bg: 'from-emerald-500 to-teal-400' },
+        { id: 3, featured: true, title: 'Comunicação Assertiva', subtitle: 'Expresse ideias com clareza em entrevistas e no trabalho.', area: 'Comunicação', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 12, rating: 4.7, votes: 761, icon: '🗣️', bg: 'from-sky-500 to-cyan-400' },
+        { id: 4, title: 'Fundamentos de UI/UX Design', subtitle: 'Pesquisa, wireframes e prototipagem de interfaces.', area: 'Design', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 36, rating: 4.8, votes: 540, icon: '🎨', bg: 'from-violet-500 to-blue-400' },
+        { id: 5, title: 'Marketing Digital na Prática', subtitle: 'Redes sociais, conteúdo e métricas para pequenos negócios.', area: 'Marketing', level: 'Intermediário', mode: 'Online', price: 'Gratuito', hours: 30, rating: 4.6, votes: 688, icon: '📣', bg: 'from-rose-500 to-orange-400' },
+        { id: 6, title: 'Assistente Administrativo', subtitle: 'Rotinas de escritório, documentos e atendimento.', area: 'Administração', level: 'Iniciante', mode: 'Híbrido', price: 'Bolsa integral', hours: 60, rating: 4.7, votes: 415, icon: '🗂️', bg: 'from-emerald-500 to-lime-400' },
+        { id: 7, title: 'Excel do Básico ao Intermediário', subtitle: 'Fórmulas, tabelas dinâmicas e gráficos.', area: 'Tecnologia', level: 'Intermediário', mode: 'Online', price: 'Gratuito', hours: 30, rating: 4.9, votes: 1502, icon: '📈', bg: 'from-green-600 to-emerald-400' },
+        { id: 8, title: 'Desenvolvimento Web com HTML, CSS e JavaScript', subtitle: 'Crie e publique o seu primeiro site responsivo.', area: 'Tecnologia', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 50, rating: 4.8, votes: 1120, icon: '💻', bg: 'from-blue-600 to-indigo-400' },
+        { id: 9, title: 'Empreendedorismo e Plano de Negócios', subtitle: 'Do problema ao modelo de negócio validado.', area: 'Administração', level: 'Intermediário', mode: 'Presencial', price: 'Bolsa integral', hours: 24, rating: 4.5, votes: 298, icon: '🚀', bg: 'from-amber-500 to-orange-400' },
+        { id: 10, title: 'Análise de Dados com Python', subtitle: 'Pandas, visualização e tomada de decisão com dados.', area: 'Tecnologia', level: 'Avançado', mode: 'Online', price: 'Gratuito', hours: 45, rating: 4.7, votes: 377, icon: '🔎', bg: 'from-sky-600 to-blue-400' },
+        { id: 11, title: 'Design Gráfico para Redes Sociais', subtitle: 'Composição, tipografia e identidade visual.', area: 'Design', level: 'Iniciante', mode: 'Online', price: 'Gratuito', hours: 18, rating: 4.6, votes: 463, icon: '🖌️', bg: 'from-fuchsia-500 to-violet-400' },
+        { id: 12, title: 'Oratória e Apresentações', subtitle: 'Técnicas para falar em público com segurança.', area: 'Comunicação', level: 'Intermediário', mode: 'Híbrido', price: 'Gratuito', hours: 16, rating: 4.8, votes: 352, icon: '🎙️', bg: 'from-cyan-600 to-sky-400' },
+        { id: 13, title: 'SEO e Produção de Conteúdo', subtitle: 'Escreva para pessoas e para mecanismos de busca.', area: 'Marketing', level: 'Avançado', mode: 'Online', price: 'Bolsa integral', hours: 22, rating: 4.5, votes: 214, icon: '✍️', bg: 'from-orange-500 to-amber-400' }
+      ];
+      const PER_PAGE = 6;
+      let currentPage = 1;
+
+      const ratingHtml = (c) => `<p class="flex items-center gap-1 text-sm"><span class="text-amber-500" aria-hidden="true">${starsText(Math.round(c.rating))}</span><span class="font-semibold text-ink">${c.rating.toFixed(1)}</span><span class="text-slate-500">(${c.votes.toLocaleString('pt-BR')})</span><span class="sr-only">Nota ${c.rating.toFixed(1)} de 5</span></p>`;
+
+      const renderFeatured = () => {
+        $('#featured-courses').innerHTML = COURSES.filter((c) => c.featured).map((c) => `
+          <article class="flex overflow-hidden rounded-2xl bg-white">
+            <div class="grid w-28 shrink-0 place-items-center bg-gradient-to-br ${c.bg} text-4xl sm:w-32" aria-hidden="true">${c.icon}</div>
+            <div class="flex flex-1 flex-col p-4">
+              <p class="text-xs font-bold text-emerald-700">${c.hours}h de carga horária</p>
+              <h3 class="mt-1 font-bold leading-snug text-ink">${esc(c.title)}</h3>
+              <p class="mt-1 flex-1 text-sm text-slate-600">${esc(c.subtitle)}</p>
+              <div class="mt-3">${ratingHtml(c)}</div>
+              <button type="button" class="btn-primary mt-3 px-4 py-2" data-course="${c.id}">Acessar curso</button>
+            </div>
+          </article>`).join('');
+      };
+
+      const getFiltered = () => {
+        const term = normalize($('#course-search').value.trim());
+        const area = $('#f-area').value;
+        const level = $('#f-nivel').value;
+        const mode = $('#f-modalidade').value;
+        const price = $('#f-investimento').value;
+        return COURSES.filter((c) =>
+          (!term || normalize(`${c.title} ${c.subtitle} ${c.area}`).includes(term)) &&
+          (!area || c.area === area) && (!level || c.level === level) &&
+          (!mode || c.mode === mode) && (!price || c.price === price));
+      };
+
+      const renderCatalog = () => {
+        const list = getFiltered();
+        const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+        currentPage = Math.min(currentPage, totalPages);
+        const slice = list.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+
+        $('#course-count').textContent = list.length === 1 ? '1 curso encontrado' : `${list.length} cursos encontrados`;
+
+        $('#course-grid').innerHTML = slice.length ? slice.map((c) => `
+          <article class="card flex flex-col overflow-hidden">
+            <div class="grid h-28 place-items-center bg-gradient-to-br ${c.bg} text-4xl" aria-hidden="true">${c.icon}</div>
+            <div class="flex flex-1 flex-col p-4">
+              <div class="flex flex-wrap gap-1.5 text-xs font-semibold">
+                <span class="rounded-full bg-blue-50 px-2 py-0.5 text-blue-800">${c.area}</span>
+                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-slate-700">${c.level}</span>
+                <span class="rounded-full bg-emerald-50 px-2 py-0.5 text-emerald-800">${c.price}</span>
+              </div>
+              <h3 class="mt-3 font-bold leading-snug text-ink">${esc(c.title)}</h3>
+              <p class="mt-1 flex-1 text-sm text-slate-600">${esc(c.subtitle)}</p>
+              <p class="mt-3 text-sm text-slate-500">${c.hours}h, ${c.mode}</p>
+              <div class="mt-1">${ratingHtml(c)}</div>
+              <button type="button" class="btn-outline mt-4 px-4 py-2" data-course="${c.id}">Acessar curso</button>
+            </div>
+          </article>`).join('') : `
+          <div class="card col-span-full p-10 text-center">
+            <p class="text-lg font-bold text-ink">Nenhum curso encontrado</p>
+            <p class="mt-1 text-slate-600">Tente outro termo ou remova algum filtro.</p>
+            <button type="button" id="clear-filters" class="btn-outline mt-5">Limpar filtros</button>
+          </div>`;
+
+        const pageBtn = (label, page, { disabled = false, current = false, aria = '' } = {}) =>
+          `<button type="button" data-page-btn="${page}" ${disabled ? 'disabled' : ''} ${current ? 'aria-current="page"' : ''} ${aria ? `aria-label="${aria}"` : ''}
+            class="min-w-[2.5rem] rounded-lg border px-3 py-2 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${current ? 'border-primary bg-primary text-white' : 'border-slate-300 bg-white text-ink hover:bg-slate-100'} disabled:cursor-not-allowed disabled:opacity-40">${label}</button>`;
+
+        $('#course-pagination').innerHTML = list.length > PER_PAGE
+          ? pageBtn('Anterior', currentPage - 1, { disabled: currentPage === 1 }) +
+            Array.from({ length: totalPages }, (_, i) => pageBtn(i + 1, i + 1, { current: i + 1 === currentPage, aria: `Página ${i + 1}` })).join('') +
+            pageBtn('Próxima', currentPage + 1, { disabled: currentPage === totalPages })
+          : '';
+      };
+
+      const filtersForm = $('#course-filters');
+      filtersForm.addEventListener('submit', (e) => e.preventDefault());
+      filtersForm.addEventListener('input', () => { currentPage = 1; renderCatalog(); });
+
+      $('#page-educacao').addEventListener('click', (event) => {
+        const pageBtn = event.target.closest('[data-page-btn]');
+        if (pageBtn && !pageBtn.disabled) {
+          currentPage = Number(pageBtn.dataset.pageBtn);
+          renderCatalog();
+          $('#course-grid').scrollIntoView({ block: 'start' });
+          return;
+        }
+        if (event.target.closest('#clear-filters')) {
+          filtersForm.reset();
+          currentPage = 1;
+          renderCatalog();
+          return;
+        }
+        const courseBtn = event.target.closest('[data-course]');
+        if (courseBtn) {
+          const course = COURSES.find((c) => c.id === Number(courseBtn.dataset.course));
+          if (course) openCourse(course);
+        }
+      });
+
+      /* ---------- Empregabilidade: currículo ---------- */
+      const cvForm = $('#cv-form');
+
+      const readCv = () => Object.fromEntries($$('[data-bind]', cvForm).map((el) => [el.dataset.bind, el.value.trim()]));
+
+      const fillList = (ul, items, className) => {
+        ul.textContent = '';
+        items.forEach((item) => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          if (className) li.className = className;
+          ul.appendChild(li);
+        });
+      };
+
+      const renderCv = () => {
+        const d = readCv();
+
+        $$('[data-out]').forEach((el) => {
+          const value = d[el.dataset.out] || '';
+          el.textContent = el.dataset.out === 'nome' ? (value || 'Seu nome completo') : value;
+          if (el.tagName === 'P') el.classList.toggle('hidden', !el.textContent);
+        });
+
+        fillList($('#cv-contato'), [d.email, d.telefone, d.cidade, d.linkedin].filter(Boolean));
+        const cursos = d.cursos.split('\n').map((s) => s.trim()).filter(Boolean);
+        const skills = d.habilidades.split(',').map((s) => s.trim()).filter(Boolean);
+        fillList($('#cv-cursos-list'), cursos);
+        fillList($('#cv-skills-list'), skills, 'rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-800');
+
+        $('[data-sep="form"]').classList.toggle('hidden', !(d.formInst && d.formPeriodo));
+        $('[data-sep="exp"]').classList.toggle('hidden', !(d.expEmpresa && d.expPeriodo));
+
+        const blocks = {
+          objetivo: d.objetivo,
+          formacao: d.formCurso || d.formInst || d.formPeriodo,
+          experiencia: d.expCargo || d.expEmpresa || d.expPeriodo || d.expDesc,
+          cursos: cursos.length,
+          habilidades: skills.length
+        };
+        Object.entries(blocks).forEach(([key, hasContent]) => {
+          $(`[data-block="${key}"]`).classList.toggle('hidden', !hasContent);
+        });
+      };
+
+      const setAccordion = (btn, open) => {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', String(open));
+        panel.classList.toggle('hidden', !open);
+        $('.acc-icon', btn).textContent = open ? '−' : '+';
+      };
+
+      $$('.acc-btn', cvForm).forEach((btn) => {
+        btn.addEventListener('click', () => setAccordion(btn, btn.getAttribute('aria-expanded') !== 'true'));
+      });
+
+      cvForm.addEventListener('input', (event) => {
+        renderCv();
+        if (event.target.id === 'cv-nome') setError('err-nome', '', event.target);
+        if (event.target.id === 'cv-email') setError('err-email', '', event.target);
+      });
+
+      const validateCv = () => {
+        const nome = $('#cv-nome');
+        const email = $('#cv-email');
+        const nomeOk = nome.value.trim().length >= 3;
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+        setError('err-nome', nomeOk ? '' : 'Informe o seu nome completo.', nome);
+        setError('err-email', emailOk ? '' : 'Informe um e-mail válido, como nome@email.com.', email);
+        if (!nomeOk || !emailOk) {
+          setAccordion($('.acc-btn[aria-controls="acc-1"]'), true);
+          (nomeOk ? email : nome).focus();
+          return false;
+        }
+        return true;
+      };
+
+      cvForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!validateCv()) return;
+        renderCv();
+        $('#cv-sheet').scrollIntoView({ block: 'start' });
+        toast('Currículo gerado. Use "Imprimir" ou "Baixar PDF" para salvar.');
+      });
+
+      const printCv = (isPdf) => {
+        if (!validateCv()) return;
+        if (isPdf) toast('Na janela de impressão, escolha "Salvar como PDF" como destino.');
+        try {
+          setTimeout(() => window.print(), isPdf ? 600 : 0);
+        } catch (err) {
+          toast('Não foi possível abrir a impressão neste navegador.');
+        }
+      };
+      $('#btn-print').addEventListener('click', () => printCv(false));
+      $('#btn-pdf').addEventListener('click', () => printCv(true));
+
+      /* ---------- Comunidade: avaliações ---------- */
+      const REVIEWS = [
+        { id: 1, name: 'Lucas Ferreira', role: 'Estudante', color: 'bg-blue-600', rating: 5, title: 'Consegui meu primeiro estágio', text: 'Fiz o curso de Python e montei meu currículo aqui mesmo. Em dois meses fui chamado para um estágio em tecnologia.', likes: 48 },
+        { id: 2, name: 'Ana Beatriz Costa', role: 'Jovem Aprendiz', color: 'bg-emerald-600', rating: 5, title: 'Conteúdo direto e fácil de entender', text: 'As aulas de Gestão Financeira são curtas e práticas. Consigo estudar no celular voltando do trabalho.', likes: 36 },
+        { id: 3, name: 'Rafael Souza', role: 'Estudante', color: 'bg-sky-600', rating: 4, title: 'Ótimo, mas quero mais cursos avançados', text: 'O portal é simples de navegar. Gostaria de ver mais opções de nível avançado na área de dados.', likes: 21 },
+        { id: 4, name: 'Juliana Martins', role: 'Em recolocação', color: 'bg-violet-600', rating: 5, title: 'O gerador de currículo ajudou muito', text: 'Eu não sabia como organizar minhas experiências. O modelo deixou tudo claro e profissional.', likes: 29 }
+      ];
+      const BASE_TOTAL = 1284;
+      const liked = new Set();
+      let selectedRating = 0;
+
+      const initials = (name) => name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
+
+      const renderReviews = () => {
+        $('#review-total').textContent = (BASE_TOTAL + REVIEWS.length - 4).toLocaleString('pt-BR');
+        $('#review-feed').innerHTML = REVIEWS.map((r) => `
+          <li class="card p-5">
+            <div class="flex items-start gap-4">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full ${r.color} text-sm font-bold text-white" aria-hidden="true">${esc(initials(r.name))}</span>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <p class="font-bold text-ink">${esc(r.name)}</p>
+                  <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">${esc(r.role)}</span>
+                </div>
+                <p class="mt-1 text-amber-500" aria-hidden="true">${starsText(r.rating)}</p>
+                <span class="sr-only">Nota ${r.rating} de 5</span>
+                <h3 class="mt-2 font-bold text-ink">${esc(r.title)}</h3>
+                <p class="mt-1 break-words text-sm leading-relaxed text-slate-600">${esc(r.text)}</p>
+                <button type="button" data-like="${r.id}" aria-pressed="${liked.has(r.id)}"
+                  class="mt-3 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${liked.has(r.id) ? 'bg-blue-50 text-primary' : 'text-slate-600 hover:bg-slate-100'}">
+                  <span aria-hidden="true">👍</span> ${r.likes + (liked.has(r.id) ? 1 : 0)} <span class="sr-only">curtidas. Curtir avaliação</span>
+                </button>
+              </div>
+            </div>
+          </li>`).join('');
+      };
+
+      $('#review-feed').addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-like]');
+        if (!btn) return;
+        const id = Number(btn.dataset.like);
+        if (liked.has(id)) liked.delete(id); else liked.add(id);
+        renderReviews();
+        const again = $(`[data-like="${id}"]`);
+        if (again) again.focus();
+      });
+
+      const starButtons = $$('#star-group .star-btn');
+      const setRating = (value) => {
+        selectedRating = value;
+        starButtons.forEach((btn) => {
+          const n = Number(btn.dataset.star);
+          btn.classList.toggle('is-on', n <= value);
+          btn.setAttribute('aria-checked', String(n === value));
+        });
+        if (value) setError('err-nota', '');
+      };
+      starButtons.forEach((btn) => {
+        btn.addEventListener('click', () => setRating(Number(btn.dataset.star)));
+        btn.addEventListener('keydown', (event) => {
+          const delta = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[event.key];
+          if (!delta) return;
+          event.preventDefault();
+          const next = Math.min(5, Math.max(1, (selectedRating || 0) + delta));
+          setRating(next);
+          starButtons[next - 1].focus();
+        });
+      });
+
+      const reviewForm = $('#review-form');
+      const reviewText = $('#review-text');
+      reviewText.addEventListener('input', () => setError('err-texto', '', reviewText));
+      reviewForm.addEventListener('change', (event) => { if (event.target.name === 'util') setError('err-util', ''); });
+
+      reviewForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const util = $('input[name="util"]:checked', reviewForm);
+        const text = reviewText.value.trim();
+
+        setError('err-nota', selectedRating ? '' : 'Escolha uma nota de 1 a 5 estrelas.');
+        setError('err-util', util ? '' : 'Selecione uma das opções.');
+        setError('err-texto', text.length >= 10 ? '' : 'Escreva pelo menos 10 caracteres.', reviewText);
+
+        if (!selectedRating) { starButtons[0].focus(); return; }
+        if (!util) { $('input[name="util"]', reviewForm).focus(); return; }
+        if (text.length < 10) { reviewText.focus(); return; }
+
+        const titles = { Sim: 'O portal me ajudou', Parcialmente: 'Ajudou em parte', 'Não': 'Ainda pode melhorar' };
+        REVIEWS.unshift({ id: Date.now(), name: 'Você', role: 'Visitante', color: 'bg-slate-700', rating: selectedRating, title: titles[util.value], text, likes: 0 });
+        renderReviews();
+        reviewForm.reset();
+        setRating(0);
+        toast('Avaliação enviada. Obrigado por contribuir!');
+      });
+
+      /* ---------- Login / Cadastro (simulado) ---------- */
+      const authForm = $('#auth-form');
+      const authName = $('#auth-name');
+      const authEmail = $('#auth-email');
+      const authPass = $('#auth-pass');
+
+      const renderAuth = () => {
+        const html = state.user
+          ? `<span class="text-sm font-semibold text-ink">Olá, ${esc(state.user.name)}</span>
+             <span class="grid h-10 w-10 place-items-center rounded-full bg-primary text-sm font-bold text-white" role="img" aria-label="Foto de perfil de ${esc(state.user.name)}">${esc(initials(state.user.name))}</span>
+             <button type="button" class="btn-ghost px-3 py-2" data-logout>Sair</button>`
+          : `<a href="#login" data-nav="login" data-mode="login" class="btn-ghost">Entrar</a>
+             <a href="#login" data-nav="login" data-mode="signup" class="btn-primary">Criar conta</a>`;
+        $$('[data-auth-slot]').forEach((slot) => { slot.innerHTML = html; });
+      };
+
+      const clearAuthErrors = () => {
+        setError('err-auth-name', '', authName);
+        setError('err-auth-email', '', authEmail);
+        setError('err-auth-pass', '', authPass);
+      };
+
+      function setAuthMode(mode) {
+        state.authMode = mode === 'signup' ? 'signup' : 'login';
+        const signup = state.authMode === 'signup';
+        $('#login-title').textContent = signup ? 'Criar nova conta' : 'Entrar no Educa+';
+        $('#login-sub').textContent = signup ? 'Leva menos de um minuto e é gratuito.' : 'Acesse seus cursos e continue de onde parou.';
+        $('#auth-name-wrap').classList.toggle('hidden', !signup);
+        $('#auth-submit').textContent = signup ? 'Criar conta' : 'Entrar';
+        $('#auth-switch-text').textContent = signup ? 'Já tem conta?' : 'Ainda não tem conta?';
+        $('#auth-switch').textContent = signup ? 'Fazer login' : 'Criar nova conta';
+        authPass.setAttribute('autocomplete', signup ? 'new-password' : 'current-password');
+        clearAuthErrors();
+      }
+
+      $('#auth-switch').addEventListener('click', () => {
+        setAuthMode(state.authMode === 'login' ? 'signup' : 'login');
+        (state.authMode === 'signup' ? authName : authEmail).focus();
+      });
+
+      authForm.addEventListener('input', (event) => {
+        if (event.target === authName) setError('err-auth-name', '', authName);
+        if (event.target === authEmail) setError('err-auth-email', '', authEmail);
+        if (event.target === authPass) setError('err-auth-pass', '', authPass);
+      });
+
+      authForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const signup = state.authMode === 'signup';
+        const name = authName.value.trim();
+        const email = authEmail.value.trim();
+        const pass = authPass.value;
+
+        const nameOk = !signup || name.length >= 2;
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+        const passOk = pass.length >= 6;
+
+        setError('err-auth-name', nameOk ? '' : 'Informe o seu nome.', authName);
+        setError('err-auth-email', emailOk ? '' : 'Informe um e-mail válido, como nome@email.com.', authEmail);
+        setError('err-auth-pass', passOk ? '' : 'A senha precisa ter pelo menos 6 caracteres.', authPass);
+
+        if (!nameOk) { authName.focus(); return; }
+        if (!emailOk) { authEmail.focus(); return; }
+        if (!passOk) { authPass.focus(); return; }
+
+        // Login simulado: a senha nunca é guardada.
+        state.user = { name: signup ? name.split(/\s+/)[0] : 'Estudante', fullName: signup ? name : 'Estudante', email };
+        store.set('educa_user', state.user);
+        authForm.reset();
+        renderAuth();
+        showPage('home');
+        toast(signup ? `Conta criada. Olá, ${state.user.name}!` : 'Você entrou. Olá, Estudante!');
+      });
+
+      function logout() {
+        state.user = null;
+        store.remove('educa_user');
+        renderAuth();
+        showPage('home');
+        toast('Você saiu da conta.');
+      }
+
+      /* ---------- Sala de aula ---------- */
+      const buildModules = (course) => [
+        { title: 'Módulo 1 - Introdução', lessons: [
+          { id: '1.1', title: 'Boas-vindas e visão geral do curso', min: 6 },
+          { id: '1.2', title: `Panorama da área de ${course.area}`, min: 12 }
+        ] },
+        { title: 'Módulo 2 - Fundamentos', lessons: [
+          { id: '2.1', title: 'Conceitos essenciais', min: 15 },
+          { id: '2.2', title: 'Ferramentas e primeiros passos', min: 18 },
+          { id: '2.3', title: 'Exercício guiado', min: 20 }
+        ] },
+        { title: 'Módulo 3 - Projeto final', lessons: [
+          { id: '3.1', title: 'Planejando o seu projeto', min: 14 },
+          { id: '3.2', title: 'Entrega e próximos passos', min: 10 }
+        ] }
+      ];
+
+      const allLessons = () => state.modules.flatMap((m) => m.lessons);
+      const doneList = () => state.progress[state.course.id] || [];
+      const isDone = (lessonId) => doneList().includes(lessonId);
+      const percentDone = () => {
+        const total = allLessons().length;
+        return total ? Math.round((doneList().length / total) * 100) : 0;
+      };
+
+      const setPlaying = (playing) => {
+        state.playing = playing;
+        $('#icon-play').classList.toggle('hidden', playing);
+        $('#icon-pause').classList.toggle('hidden', !playing);
+        const btn = $('#player-btn');
+        btn.setAttribute('aria-pressed', String(playing));
+        btn.setAttribute('aria-label', playing ? 'Pausar aula' : 'Reproduzir aula');
+        $('#player-status').textContent = playing
+          ? `Reproduzindo (simulação): Aula ${state.lesson.id}`
+          : 'Vídeo de demonstração';
+      };
+
+      const renderProgress = () => {
+        const pct = percentDone();
+        const total = allLessons().length;
+        $('#progress-pct').textContent = `${pct}%`;
+        $('#progress-fill').style.width = `${pct}%`;
+        $('#progress-bar').setAttribute('aria-valuenow', String(pct));
+        $('#progress-count').textContent = `${doneList().length} de ${total} aulas concluídas`;
+
+        const complete = pct === 100;
+        $('#cert-btn').disabled = !complete;
+        $('#cert-hint').textContent = complete
+          ? 'Curso concluído. O certificado está liberado.'
+          : 'Conclua todas as aulas para liberar o certificado.';
+        if (!complete) $('#certificate').classList.add('hidden');
+      };
+
+      const renderLesson = () => {
+        const lesson = state.lesson;
+        const done = isDone(lesson.id);
+        $('#lesson-title').textContent = `Aula ${lesson.id}: ${lesson.title}`;
+        $('#lesson-desc').textContent = `Aula de ${lesson.min} minutos do curso "${state.course.title}". Assista ao vídeo, consulte o material de apoio e marque a aula como concluída para avançar no seu progresso.`;
+        $('#pdf-name').textContent = `material-aula-${lesson.id.replace('.', '-')}.pdf`;
+        const btn = $('#lesson-complete');
+        btn.textContent = done ? 'Aula concluída (desmarcar)' : 'Marcar aula como concluída';
+        btn.setAttribute('aria-pressed', String(done));
+      };
+
+      const renderModules = () => {
+        $('#module-list').innerHTML = state.modules.map((mod) => `
+          <div>
+            <h3 class="text-sm font-extrabold text-ink">${esc(mod.title)}</h3>
+            <ul class="mt-2 space-y-1">
+              ${mod.lessons.map((lesson) => {
+                const current = state.lesson.id === lesson.id;
+                return `
+                <li class="flex items-start gap-2 rounded-lg p-2 ${current ? 'bg-blue-50' : ''}">
+                  <input type="checkbox" id="chk-${lesson.id}" data-lesson="${lesson.id}" ${isDone(lesson.id) ? 'checked' : ''}
+                    class="mt-1 h-4 w-4 shrink-0 accent-emerald-600" aria-label="Marcar Aula ${lesson.id} como concluída">
+                  <button type="button" data-open-lesson="${lesson.id}" ${current ? 'aria-current="true"' : ''}
+                    class="flex-1 rounded text-left text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${current ? 'font-bold text-primary' : 'text-slate-700 hover:text-primary'} ${isDone(lesson.id) ? 'line-through decoration-slate-400' : ''}">
+                    Aula ${lesson.id}: ${esc(lesson.title)}
+                    <span class="block text-xs font-normal text-slate-500 no-underline">${lesson.min} min</span>
+                  </button>
+                </li>`;
+              }).join('')}
+            </ul>
+          </div>`).join('');
+      };
+
+      const renderSala = () => {
+        $('#sala-title').textContent = state.course.title;
+        $('#sala-meta').textContent = `${state.course.area}, ${state.course.level}, ${state.course.hours}h`;
+        renderModules();
+        renderLesson();
+        renderProgress();
+      };
+
+      const toggleLesson = (lessonId, forceValue) => {
+        const set = new Set(doneList());
+        const willBeDone = typeof forceValue === 'boolean' ? forceValue : !set.has(lessonId);
+        if (willBeDone) set.add(lessonId); else set.delete(lessonId);
+        const before = percentDone();
+        state.progress[state.course.id] = allLessons().map((l) => l.id).filter((id) => set.has(id));
+        store.set('educa_progress', state.progress);
+        renderModules();
+        renderLesson();
+        renderProgress();
+        if (before < 100 && percentDone() === 100) toast('Parabéns! Você concluiu o curso. Emita o seu certificado.');
+      };
+
+      const selectLesson = (lessonId) => {
+        const lesson = allLessons().find((l) => l.id === lessonId);
+        if (!lesson) return;
+        state.lesson = lesson;
+        setPlaying(false);
+        renderModules();
+        renderLesson();
+      };
+
+      function openCourse(course) {
+        state.course = course;
+        state.modules = buildModules(course);
+        state.lesson = allLessons().find((l) => !isDone(l.id)) || allLessons()[0];
+        $('#certificate').classList.add('hidden');
+        renderSala();
+        setPlaying(false);
+        showPage('sala');
+      }
+
+      const salaPage = $('#page-sala');
+
+      salaPage.addEventListener('change', (event) => {
+        const box = event.target.closest('[data-lesson]');
+        if (!box) return;
+        toggleLesson(box.dataset.lesson, box.checked);
+        const again = document.getElementById(`chk-${box.dataset.lesson}`);
+        if (again) again.focus();
+      });
+
+      salaPage.addEventListener('click', (event) => {
+        const lessonBtn = event.target.closest('[data-open-lesson]');
+        if (lessonBtn) {
+          const id = lessonBtn.dataset.openLesson;
+          selectLesson(id);
+          const again = $(`[data-open-lesson="${id}"]`);
+          if (again) again.focus();
+        }
+      });
+
+      $('#player-btn').addEventListener('click', () => setPlaying(!state.playing));
+
+      $('#lesson-complete').addEventListener('click', () => toggleLesson(state.lesson.id));
+
+      $('#lesson-pdf').addEventListener('click', () => {
+        toast(`Download simulado: ${$('#pdf-name').textContent}`);
+      });
+
+      $('#cert-btn').addEventListener('click', () => {
+        if (percentDone() < 100) return;
+        const cert = $('#certificate');
+        $('#cert-name').textContent = state.user ? state.user.fullName || state.user.name : 'Estudante';
+        $('#cert-course').textContent = state.course.title;
+        $('#cert-info').textContent = `Carga horária de ${state.course.hours}h. Emitido em ${new Date().toLocaleDateString('pt-BR')}.`;
+        cert.classList.remove('hidden');
+        cert.scrollIntoView({ block: 'center' });
+        cert.focus({ preventScroll: true });
+        toast(state.user ? 'Certificado emitido.' : 'Certificado emitido. Entre na sua conta para incluir o seu nome.');
+      });
+
+      /* ---------- Inicialização ---------- */
+      try {
+        renderFeatured();
+        renderCatalog();
+        renderCv();
+        renderReviews();
+        renderAuth();
+        setAuthMode('login');
+        showPage(location.hash.slice(1) || 'home', { focus: false });
+      } catch (err) {
+        console.error('Erro ao iniciar o Educa+:', err);
+        toast('Ocorreu um erro ao carregar a página. Recarregue para tentar de novo.');
+      }
+    })();
+  </script>
+</body>
+</html>
